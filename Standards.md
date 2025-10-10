@@ -13,4 +13,3 @@
 # Bronnen:
 - https://derivative.ca/UserGuide/First_Things_to_Know_about_TouchDesigner
 - https://docs.derivative.ca/First_Things_to_Know_about_TouchDesigner#More... 
-- 
