@@ -41,7 +41,7 @@ app.get("/people", (req, res) => {
     });
 });
 
-app.post("/person", async (req, res) => {
+app.post("/people", async (req, res) => {
   console.log("Full body received:", req.body);
   try {
     const data = req.body;

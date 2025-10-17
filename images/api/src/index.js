@@ -7,7 +7,7 @@ const { MongoClient } = require("mongodb");
 
 app.use(bodyParser.json());
 
-const credentials = require("./Credentials.js");
+const credentials = require("../Credentials.js");
 
 const uri = `mongodb+srv://${credentials.username}:${credentials.password}@web2.qwg6m.mongodb.net/?retryWrites=true&w=majority&appName=Web2`;
 const client = new MongoClient(uri);
