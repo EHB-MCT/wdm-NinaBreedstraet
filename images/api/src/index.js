@@ -8,8 +8,10 @@ const { MongoClient } = require("mongodb");
 app.use(bodyParser.json());
 
 const credentials = require("../Credentials.js");
+const password = process.env.PASSWORD;
+const username = process.env.USERNAME;
 
-const uri = `mongodb+srv://${credentials.username}:${credentials.password}@web2.qwg6m.mongodb.net/?retryWrites=true&w=majority&appName=Web2`;
+const uri = `mongodb+srv://${username}:${password}@web2.qwg6m.mongodb.net/?retryWrites=true&w=majority&appName=Web2`;
 const client = new MongoClient(uri);
 
 app.use("/static", express.static(path.join(__dirname, "public")));
