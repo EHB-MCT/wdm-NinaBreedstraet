@@ -52,12 +52,14 @@ app.post("/people", async (req, res) => {
     const result = await peopleCollection.insertOne(newPerson);
 
     console.log("Person:", result);
-    //await client.close();
+
+    res.status(201).json({
+      message: "Persoon toegevoegd!",
+      insertedId: result.insertedId,
+    });
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({ error: "Internal server error" });
-  } finally {
-    await client.close();
   }
 });
 
@@ -99,12 +101,14 @@ app.post("/objects", async (req, res) => {
     const result = await objectsCollection.insertOne(newObject);
 
     console.log("Object:", result);
-    // await client.close();
+
+    res.status(201).json({
+      message: "Object toegevoegd!",
+      insertedId: result.insertedId,
+    });
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({ error: "Internal server error" });
-  } finally {
-    console.log("finally!");
   }
 });
 
