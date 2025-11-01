@@ -3,10 +3,10 @@ FROM node:latest
 
 WORKDIR /usr/app
 
-COPY package*.json .
+COPY package*.json ./
 
 RUN npm install --quiet
 
-COPY ./ ./
+COPY ./images/api ./ 
 
 CMD ["npm", "start"]
