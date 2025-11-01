@@ -5,13 +5,15 @@ const path = require("path");
 const cors = require("cors");
 const { MongoClient } = require("mongodb");
 const bodyParser = require("body-parser");
-const credentials = require("./Credentials.js");
+//const credentials = require("./Credentials.js");
 
 app.use(bodyParser.json());
 app.use(express.json());
 app.use("/static", express.static(path.join(__dirname, "public")));
+const password = process.env.PASSWORD;
+const username = process.env.USERNAME;
 
-const uri = `mongodb+srv://${credentials.username}:${credentials.password}@web2.qwg6m.mongodb.net/?retryWrites=true&w=majority&appName=Web2`;
+const uri = `mongodb+srv://${username}:${password}@web2.qwg6m.mongodb.net/?retryWrites=true&w=majority&appName=Web2`;
 
 const client = new MongoClient(uri);
 const db = client.db("wdmNinaBreedstraetDatabase");
