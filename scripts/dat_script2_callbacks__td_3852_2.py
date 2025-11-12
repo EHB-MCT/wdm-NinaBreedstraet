@@ -3,19 +3,54 @@ import requests
 
 def send_data():
     url = 'https://wdm-ninabreedstraet-2.onrender.com/people'
-    mediapipe_chop = op('select1')
-    
+    mediapipe_chop = op('/project1/mediapipe_data/select1') 
+
+    mediapipe_chop.cook(force=True)
+
+    data = {}
+    for chan in mediapipe_chop.chans():
+        try:
+            data[chan.name] = float(chan[-1])
+        except:
+            data[chan.name] = None
+
     payload = {
         "time": datetime.datetime.now().isoformat(),
-        "x": str(mediapipe_chop['tx'].eval()),
-        "y": mediapipe_chop['ty'].eval(),
-        "z":  mediapipe_chop['tz'].eval()
+        "mediapipe": data
     }
-    myobj = {'somekey': 'somevalue'}
-    x = requests.post(url, json = json.dump(payload))
-    print(x.text)
 
-    return
+    try:
+        res = requests.post(url, json=payload)
+        debug(f"Sent {len(data)} values → {res.status_code}")
+    except Exception as e:
+        debug(f"Error sending data: {e}")
+
+
+# sources: 
+# https://derivative.ca/UserGuide/Working_with_CHOPs_in_Python
+# https://docs.derivative.ca/Working_with_OPs_in_Python
+# https://derivative.ca/UserGuide/Channel_Class
+# https://docs.python.org/3/library/datetime.html
+# https://docs.python.org/3/tutorial/datastructures.html
+# https://railsware.com/blog/indexing-and-slicing-for-lists-tuples-strings-sequential-types/
+# https://www.w3schools.com/python/ref_requests_post.asp#:~:text=The%20post()%20method%20sends,some%20data%20to%20the%20server.
+# https://www.w3schools.com/python/ref_func_float.asp 
+#
+#
+# def send_data():
+#     url = 'https://wdm-ninabreedstraet-2.onrender.com/people'
+#     mediapipe_chop = op('/project1/math1')
+    
+#     payload = {
+#         "time": datetime.datetime.now().isoformat(),
+#         "x": mediapipe_chop['chan1'][0],
+#         "y": mediapipe_chop['chan2'][0],
+#         "z":  mediapipe_chop['chan3'][0]
+#     }
+#     x = requests.post(url, json=payload)
+#     print(x.text)
+
+#     return
 
 
 
