@@ -64,25 +64,15 @@ app.post("/people", async (req, res) => {
 });
 
 //objects
-app.get("/objects", (req, res) => {
-  client
-    .connect()
-    .then(() => {
-      const database = client.db("wdmNinaBreedstraetDatabase");
-      const objects = database.collection("objects");
+app.get("/users", (req, res) => {
+  const database = client.db("wdmNinaBreedstraetDatabase");
+  const people = database.collection("objects");
 
-      objects
-        .find({})
-        .toArray()
-        .then((allObjects) => {
-          res.status(200).json(allObjects);
-        })
-        .catch((err) => {
-          console.error(err);
-          res.status(500).json({
-            error: "Er is een fout opgetreden bij het ophalen van de data",
-          });
-        });
+  people
+    .find({})
+    .toArray()
+    .then((allObjects) => {
+      res.status(200).json(allObjects);
     })
     .catch((err) => {
       console.error(err);
@@ -92,15 +82,15 @@ app.get("/objects", (req, res) => {
     });
 });
 
-app.post("/objects", async (req, res) => {
+app.post("/users", async (req, res) => {
   console.log("Full body received:", req.body);
   try {
     const data = req.body;
 
-    const newObject = { data };
-    const result = await objectsCollection.insertOne(newObject);
+    const newUser = { data };
+    const result = await peopleCollection.insertOne(newUser);
 
-    console.log("Object:", result);
+    console.log("Person:", result);
 
     res.status(201).json({
       message: "Object toegevoegd!",
