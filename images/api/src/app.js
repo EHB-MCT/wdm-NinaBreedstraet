@@ -18,7 +18,7 @@ const uri = `mongodb+srv://${username}:${password}@web2.qwg6m.mongodb.net/?retry
 const client = new MongoClient(uri);
 const db = client.db("wdmNinaBreedstraetDatabase");
 const peopleCollection = db.collection("people");
-const objectsCollection = db.collection("objects");
+const usersCollection = db.collection("objects");
 client
   .connect()
   .then(() => console.log("MongoDB connected"))
@@ -88,7 +88,7 @@ app.post("/users", async (req, res) => {
     const data = req.body;
 
     const newUser = { data };
-    const result = await peopleCollection.insertOne(newUser);
+    const result = await usersCollection.insertOne(newUser);
 
     console.log("Person:", result);
 
