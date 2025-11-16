@@ -5,15 +5,18 @@ const path = require("path");
 const cors = require("cors");
 const { MongoClient } = require("mongodb");
 const bodyParser = require("body-parser");
-//const credentials = require("./Credentials.js");
+const credentials = require("./Credentials.js");
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
 app.use("/static", express.static(path.join(__dirname, "public")));
-const password = process.env.PASSWORD;
-const username = process.env.USERNAME;
+// const password = process.env.PASSWORD;
+// const username = process.env.USERNAME;
+const localpassword = credentials.password;
+const localusername = credentials.username;
 
-const uri = `mongodb+srv://${username}:${password}@web2.qwg6m.mongodb.net/?retryWrites=true&w=majority&appName=Web2`;
+const uri = `mongodb+srv://${localusername}:${localpassword}@web2.qwg6m.mongodb.net/?retryWrites=true&w=majority&appName=Web2`;
 
 const client = new MongoClient(uri);
 const db = client.db("wdmNinaBreedstraetDatabase");
@@ -87,15 +90,18 @@ app.post("/users", async (req, res) => {
   try {
     const data = req.body;
 
-    const newUser = { data };
+    const newUser = {
+      name: data.name,
+      email: data.email,
+      password: data.password,
+      createdAt: data.createdAt,
+    };
+
     const result = await usersCollection.insertOne(newUser);
 
-    console.log("Person:", result);
+    console.log("User inserted:", result);
 
-    res.status(201).json({
-      message: "Object toegevoegd!",
-      insertedId: result.insertedId,
-    });
+    res.status(201).json(newUser);
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({ error: "Internal server error" });
