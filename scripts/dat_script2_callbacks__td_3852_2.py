@@ -1,29 +1,51 @@
 ﻿import datetime
 import requests
 
-def send_data():
-    url = 'https://wdm-ninabreedstraet-2.onrender.com/people'
-    mediapipe_chop = op('/project1/mediapipe_data/select1') 
+import datetime
+import requests
 
+def send_data():
+    url = 'http://localhost/people'  # pas aan naar jouw server
+    mediapipe_chop = op('/project1/mediapipe_data/select1')  # pas aan naar jouw Mediapipe CHOP
+
+    # forceer cook om actuele data te krijgen
     mediapipe_chop.cook(force=True)
 
     data = {}
     for chan in mediapipe_chop.chans():
         try:
-            data[chan.name] = float(chan[-1])
+            data[chan.name] = float(chan[-1])  # laatste sample
         except:
             data[chan.name] = None
 
+    uid = op('/project1/uid_manager').module.get_uid()
+    if not uid:
+        print("Geen gebruiker geselecteerd, data wordt niet verstuurd")
+        return
+
     payload = {
+        "uid": uid,
         "time": datetime.datetime.now().isoformat(),
         "mediapipe": data
     }
 
     try:
         res = requests.post(url, json=payload)
-        debug(f"Sent {len(data)} values → {res.status_code}")
+        print(f"✅ Sent {len(data)} values → {res.status_code}")
     except Exception as e:
-        debug(f"Error sending data: {e}")
+        print(f"❌ Error sending data: {e}")
+
+
+def pulse_send():
+    """
+    Functie die je kunt aanroepen op een pulse: 
+    maakt een nieuwe UID en stuurt data één keer.
+    """
+    # nieuwe gebruiker
+    op('/project1/uid_manager').module.new_user()
+
+    # stuur data
+    send_data()
 
 
 # sources: 
