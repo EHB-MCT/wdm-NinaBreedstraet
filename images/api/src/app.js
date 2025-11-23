@@ -1,9 +1,9 @@
 const express = require("express");
 const app = express();
-const port = 3000;
+// const port = 3000;
 const path = require("path");
 const cors = require("cors");
-const { MongoClient } = require("mongodb");
+const { MongoClient, ObjectId } = require("mongodb");
 const bodyParser = require("body-parser");
 const credentials = require("./Credentials.js");
 
@@ -66,12 +66,12 @@ app.post("/people", async (req, res) => {
   }
 });
 
-//objects
+//users
 app.get("/users", (req, res) => {
   const database = client.db("wdmNinaBreedstraetDatabase");
-  const people = database.collection("objects");
+  const users = database.collection("objects");
 
-  people
+  users
     .find({})
     .toArray()
     .then((allObjects) => {
@@ -83,6 +83,27 @@ app.get("/users", (req, res) => {
         .status(500)
         .json({ error: "Kan geen verbinding maken met de database." });
     });
+});
+
+app.get("/users/:id", async (req, res) => {
+  try {
+    const userId = req.params.id;
+
+    if (!ObjectId.isValid(userId)) {
+      return res.status(400).json({ error: "Ongeldige user id" });
+    }
+
+    const user = await usersCollection.findOne({ _id: new ObjectId(userId) });
+
+    if (!user) {
+      return res.status(404).json({ error: "Gebruiker niet gevonden" });
+    }
+
+    res.status(200).json(user);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
 
 app.post("/users", async (req, res) => {

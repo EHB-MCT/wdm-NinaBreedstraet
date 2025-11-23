@@ -40,7 +40,7 @@ export default {
   methods: {
     async loginUser() {
       try {
-        const res = await fetch("http://localhost/users");
+        const res = await fetch("http://localhost:3000/users");
         const users = await res.json();
         const user = users.find(
           (u) => u.email === this.email && u.password === this.password

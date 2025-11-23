@@ -21,12 +21,11 @@ export default {
   data() {
     return {};
   },
-  watch: {
-    // Herinitieer dropdowns bij wijziging van user of parkings
-    user: {
-      immediate: true,
-    },
-  },
+  // watch: {
+  //   user: {
+  //     immediate: true,
+  //   },
+  // },
   methods: {},
 };
 </script>
