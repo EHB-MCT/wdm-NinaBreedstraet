@@ -9,8 +9,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "chart.js": "^4.5.1",
+    "node.js": "^0.0.1-security",
     "vite-plugin-vue-devtools": "^8.0.3",
     "vue": "^3.5.24",
+    "vue-data-ui": "^3.7.12",
     "vue-router": "^4.6.3"
   },
   "devDependencies": {
