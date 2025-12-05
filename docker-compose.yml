@@ -7,3 +7,13 @@ services:
       - 3000:3000
     volumes:
       - ./images/api/src:/usr/app/src
+
+  frontend:
+    build:
+      context: ./front_end/front-end-wdm
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./front_end/front-end-wdm:/usr/src/app
+      - /usr/src/app/node_modules
+    command: ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
