@@ -11,8 +11,6 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
 app.use("/static", express.static(path.join(__dirname, "public")));
-// const password = process.env.PASSWORD;
-// const username = process.env.USERNAME;
 const localpassword = credentials.password;
 const localusername = credentials.username;
 
@@ -46,6 +44,25 @@ app.get("/people", (req, res) => {
     });
 });
 
+app.get("/people/:uid", async (req, res) => {
+  try {
+    const userId = req.params.uid;
+    const database = client.db("wdmNinaBreedstraetDatabase");
+    const people = database.collection("people");
+
+    const mensen = await people.find({ "data.uid": userId }).toArray();
+
+    if (!mensen || mensen.length === 0) {
+      return res.status(404).json({ error: "Gebruiker niet gevonden" });
+    }
+
+    res.status(200).json(mensen);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 app.post("/people", async (req, res) => {
   console.log("Full body received:", req.body);
   try {
@@ -62,6 +79,18 @@ app.post("/people", async (req, res) => {
     });
   } catch (error) {
     console.error("Error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.get("/uids", async (req, res) => {
+  try {
+    const database = client.db("wdmNinaBreedstraetDatabase");
+    const people = database.collection("people");
+    const uids = await people.distinct("data.uid");
+    res.json(uids);
+  } catch (err) {
+    console.error(err);
     res.status(500).json({ error: "Internal server error" });
   }
 });
