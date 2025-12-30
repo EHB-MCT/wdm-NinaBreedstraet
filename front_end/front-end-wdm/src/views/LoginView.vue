@@ -11,10 +11,11 @@
       />
       <div class="button-row">
         <button type="submit" class="buttonLogin">Inloggen</button>
-        <button class="buttonLogin secondary" @click="showRegister = !showRegister">
-          {{
-            showRegister ? "Terug naar inloggen" : "Registreren"
-          }}
+        <button
+          class="buttonLogin secondary"
+          @click="showRegister = !showRegister"
+        >
+          {{ showRegister ? "Terug naar inloggen" : "Registreren" }}
         </button>
       </div>
     </form>
@@ -66,68 +67,6 @@ export default {
 </script>
 
 <style scoped>
-/* Original styles preserved in comments */
-/*
-.overview {
-  background-color: lightblue;
-  border-radius: 20px;
-  padding: 2rem;
-  max-width: 400px;
-  margin: 2rem auto;
-}
-.form {
-  margin-bottom: 2rem;
-  border-bottom: darkblue solid;
-  display: flex;
-  flex-direction: column;
-}
-.form input {
-  margin-bottom: 0.75rem;
-  padding: 0.5rem;
-}
-.buttonParking {
-  align-items: center;
-  align-self: flex-start;
-  background-color: grey;
-  border: 0;
-  border-radius: 100px;
-  box-sizing: border-box;
-  color: #ffffff;
-  cursor: pointer;
-  display: inline-flex;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 12px;
-  font-weight: 600;
-  justify-content: center;
-  line-height: 20px;
-  max-width: 380px;
-  min-height: 20px;
-  min-width: 0px;
-  overflow: hidden;
-  padding: 0 20px;
-  text-align: center;
-  touch-action: manipulation;
-  transition: background-color 0.167s cubic-bezier(0.4, 0, 0.2, 1),
-    box-shadow 0.167s cubic-bezier(0.4, 0, 0.2, 1),
-    color 0.167s cubic-bezier(0.4, 0, 0.2, 1);
-  user-select: none;
-}
-.buttonParking:hover,
-.buttonParking:focus {
-  background-color: darkgrey;
-  color: #ffffff;
-}
-.buttonParking:active {
-  background: #09223b;
-  color: rgba(255, 255, 255, 0.7);
-}
-.buttonParking:disabled {
-  cursor: not-allowed;
-  background: rgba(0, 0, 0, 0.08);
-  color: rgba(0, 0, 0, 0.3);
-}
-*/
-
 .auth-page {
   min-height: 100vh;
   display: flex;
@@ -224,8 +163,6 @@ hr {
   background: linear-gradient(to right, transparent, #e2e8f0, transparent);
   margin: 2rem 0;
 }
-
-
 
 .buttonLogin.secondary {
   background: transparent;

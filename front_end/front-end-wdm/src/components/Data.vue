@@ -1,147 +1,3 @@
-<!-- <template>
-  <div v-if="people && people.length">
-    <div v-for="p in people" :key="p._id" class="person">
-      <p>Time: {{ p.data.time }}</p>
-
-      <div class="mediapipe">
-        <h4>Mediapipe data:</h4>
-        <ul>
-          <li v-for="(value, key) in p.data.mediapipe" :key="key">
-            {{ key }} : {{ value }}
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div v-else>
-    <p>Geen data gevonden...</p>
-  </div>
-</template> -->
-
-<!-- <template>
-  <div>
-    <h3>People data</h3>
-
-    <div v-if="sparkData.length">
-      <VueUiTableSparkline :data="sparkData" />
-    </div>
-
-    <div v-else>
-      <p>Geen data beschikbaar...</p>
-    </div>
-  </div>
-</template> -->
-
-<!-- <script>
-
-export default {
-  name: "People",
-  props: {
-    people: {
-      type: Array,
-      required: true,
-    },
-  },
-};
-</script> -->
-
-<!-- <script setup>
-import { computed } from "vue";
-import { VueUiTableSparkline } from "vue-data-ui";
-
-const props = defineProps({
-  people: {
-    type: Array,
-    required: true,
-  },
-});
-
-// Hulpfunctie voor random kleur
-function randomColor() {
-  return "#" + Math.floor(Math.random() * 16777215).toString(16);
-}
-
-// -> we pakken 1 mediapipe key, bijvoorbeeld index_finger_tip:y
-const sparkData = computed(() => {
-  if (!props.people) return [];
-
-  const byUid = {};
-
-  props.people.forEach((frame) => {
-    const uid = frame.uid || frame.data?.uid;
-    if (!uid) return;
-
-    const mp = frame.mediapipe || frame.data?.mediapipe;
-    if (!mp) return;
-
-    const value = mp["h1:index_finger_tip:y"];
-    if (value == null) return;
-
-    if (!byUid[uid]) {
-      byUid[uid] = {
-        name: "User " + uid,
-        values: [],
-        color: randomColor(),
-      };
-    }
-
-    byUid[uid].values.push(value);
-  });
-
-  return Object.values(byUid);
-});
-</script>
-
-<style>
-.view {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  font-family: Arial, Helvetica, sans-serif;
-  align-items: baseline;
-}
-.person {
-  background-color: lightblue;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  justify-content: center;
-  align-items: center;
-  border-radius: 20px;
-  width: 35rem;
-  padding: 2rem;
-  margin-bottom: 2rem;
-}
-
-.button {
-  align-items: center;
-  background-color: #0a66c2;
-  border: none;
-  border-radius: 100px;
-  color: #ffffff;
-  cursor: pointer;
-  display: inline-flex;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 16px;
-  font-weight: 600;
-  padding: 0 20px;
-  line-height: 20px;
-  user-select: none;
-}
-.button:hover,
-.button:focus {
-  background-color: #16437e;
-}
-.button:active {
-  background: #09223b;
-}
-.button:disabled {
-  cursor: not-allowed;
-  background: rgba(0, 0, 0, 0.08);
-  color: rgba(0, 0, 0, 0.3);
-}
-</style> -->
 <template>
   <div>
     <div v-for="uid in uids" :key="uid" class="chart-container">
@@ -258,12 +114,11 @@ onMounted(async () => {
     open.value[uid] = false;
 
     const data = await fetchDataForUID(uid);
-    allData.value[uid] = data; // Store data for later use
+    allData.value[uid] = data;
 
     const keys = Object.keys(data[0]?.data?.mediapipe || {});
     availableChannels.value[uid] = keys;
 
-    // Select all wrist-related channels by default
     selectedChannels.value[uid] = keys.filter((ch) => ch.includes("wrist"));
 
     await nextTick();
@@ -287,45 +142,6 @@ onMounted(async () => {
 </script>
 
 <style>
-/* Original styles preserved in comments */
-/*
-.chart-container {
-  margin-bottom: 40px;
-  background-color: rgb(245, 200, 234);
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-.chart-container canvas {
-  height: 300px !important;
-  width: 600px !important;
-}
-
-.toggle-btn {
-  border: none;
-  background-color: rgb(245, 200, 234);
-  cursor: pointer;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 20px;
-  color: rgb(255, 0, 128);
-  display: flex;
-  flex-direction: row;
-}
-
-.toggle-btn:hover {
-  text-shadow: 0px 0px 5px rgb(255, 0, 128);
-}
-
-.toggle-btn p {
-  color: rgb(255, 0, 128);
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 15px;
-}
-*/
-
 .chart-container {
   margin-bottom: 2rem;
   background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);

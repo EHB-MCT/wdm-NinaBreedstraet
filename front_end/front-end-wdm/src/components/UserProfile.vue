@@ -21,11 +21,6 @@ export default {
   data() {
     return {};
   },
-  // watch: {
-  //   user: {
-  //     immediate: true,
-  //   },
-  // },
   methods: {},
 };
 </script>

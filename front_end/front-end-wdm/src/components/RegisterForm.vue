@@ -4,7 +4,12 @@
     <form @submit.prevent="register" class="form">
       <input v-model="name" type="text" placeholder="Naam" required />
       <input v-model="email" type="email" placeholder="Email" required />
-      <input v-model="password" type="password" placeholder="Wachtwoord" required />
+      <input
+        v-model="password"
+        type="password"
+        placeholder="Wachtwoord"
+        required
+      />
       <button type="submit" class="buttonLogin">Registreren</button>
     </form>
   </div>
@@ -36,7 +41,6 @@ export default {
 
         if (!res.ok) throw new Error("Registratie mislukt");
         const user = await res.json();
-        // geef het geregistreerde user-object terug aan parent
         this.$emit("registered", user);
       } catch (err) {
         console.error(err);

@@ -69,18 +69,6 @@ export default {
         console.error("Fetch failed:", err);
       }
     },
-
-    // async fetchData() {
-    //   const stored = localStorage.getItem("data");
-    //   if (stored) {
-    //     this.people = JSON.parse(stored);
-    //   }
-
-    //   const res = await fetch("http://localhost:80/people");
-    //   this.people = await res.json();
-
-    //   localStorage.setItem("people", JSON.stringify(this.people));
-    // },
   },
   async mounted() {
     await this.fetchUser();
